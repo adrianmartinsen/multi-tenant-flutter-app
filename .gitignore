@@ -1,0 +1,17 @@
+# Flutter/Dart build files
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock
+
+# IDE files
+.idea/
+.vscode/
+
+# Misc
+*.log
+*todo.md
+*copy.dart
+*.jks
