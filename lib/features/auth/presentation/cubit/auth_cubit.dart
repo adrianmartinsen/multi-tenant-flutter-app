@@ -70,6 +70,23 @@ class AuthCubit extends Cubit<AuthCubitState> {
     await _checkUserState();
   }
 
+  Future<void> deleteAccount() async {
+    emit(AuthDeleting());
+
+    try {
+      await _authRepository.deleteAccount();
+
+      // Account deleted successfully - user is automatically signed out
+      emit(AuthAccountDeleted());
+
+      // Transition to initial state after a brief moment
+      await Future.delayed(const Duration(milliseconds: 500));
+      emit(AuthInitial());
+    } catch (e) {
+      emit(AuthError('An unexpected error occurred'));
+    }
+  }
+
   Future<void> signOut() async {
     try {
       await _authRepository.signOut();

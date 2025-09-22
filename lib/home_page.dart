@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/auth/presentation/cubit/auth_cubit.dart';
 import 'features/auth/presentation/cubit/auth_cubit_state.dart';
+import 'features/auth/presentation/widgets/delete_account_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -74,6 +75,38 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  SafeArea(
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        side: BorderSide(color: Colors.red),
+                      ),
+                      onPressed: state is AuthDeleting
+                          ? null
+                          : () => DeleteAccountDialog.show(
+                              context,
+                              () => context.read<AuthCubit>().deleteAccount(),
+                            ),
+                      child: state is AuthDeleting
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3,
+                                color: Colors.red,
+                              ),
+                            )
+                          : const Text(
+                              'Delete Account',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
                 ],

@@ -9,5 +9,6 @@ abstract class AuthRepository {
   Future<List<UserModel>> getFamilyMembers();
   Future<UserModel?> getCurrentUser();
   Future<FamilyModel?> getCurrentFamily();
+  Future<void> deleteAccount();
   Future<void> signOut();
 }

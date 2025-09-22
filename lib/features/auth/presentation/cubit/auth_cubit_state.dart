@@ -1,7 +1,14 @@
+import 'package:equatable/equatable.dart';
+
 import '../../domain/family_model.dart';
 import '../../domain/user_model.dart';
 
-abstract class AuthCubitState {}
+abstract class AuthCubitState extends Equatable {
+  const AuthCubitState();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class AuthInitial extends AuthCubitState {}
 
@@ -12,7 +19,10 @@ class AuthUserCreated extends AuthCubitState {}
 class AuthUserWithoutFamily extends AuthCubitState {
   final UserModel user;
 
-  AuthUserWithoutFamily({required this.user});
+  const AuthUserWithoutFamily({required this.user});
+
+  @override
+  List<Object?> get props => [user];
 }
 
 class AuthAuthenticated extends AuthCubitState {
@@ -21,7 +31,7 @@ class AuthAuthenticated extends AuthCubitState {
   final List<UserModel> familyMembers;
   final String? error;
 
-  AuthAuthenticated({
+  const AuthAuthenticated({
     required this.user,
     required this.family,
     this.familyMembers = const [],
@@ -41,10 +51,27 @@ class AuthAuthenticated extends AuthCubitState {
       error: error,
     );
   }
+
+  @override
+  List<Object?> get props => [user, family, familyMembers, error];
+}
+
+class AuthDeleting extends AuthCubitState {}
+
+class AuthAccountDeleted extends AuthCubitState {
+  final String message;
+
+  const AuthAccountDeleted({this.message = 'Account successfully deleted'});
+
+  @override
+  List<Object> get props => [message];
 }
 
 class AuthError extends AuthCubitState {
   final String message;
 
-  AuthError(this.message);
+  const AuthError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

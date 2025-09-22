@@ -110,6 +110,24 @@ class SupabaseAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<void> deleteAccount() async {
+    try {
+      final user = _supabase.auth.currentUser;
+      if (user == null) {
+        throw const AuthException('No user logged in');
+      }
+
+      // Delete the user account - this will trigger the database cascade
+      // which removes the user from public.users and potentially the family
+      await _supabase.auth.admin.deleteUser(user.id);
+    } on AuthException catch (e) {
+      throw AuthException(e.message);
+    } catch (e) {
+      throw const AuthException('Failed to delete account. Please try again.');
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     await _supabase.auth.signOut();
   }
