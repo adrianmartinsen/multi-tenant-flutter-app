@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../domain/family_model.dart';
+import '../../../family/domain/family_model.dart';
 import '../../domain/user_model.dart';
 
 abstract class AuthCubitState extends Equatable {

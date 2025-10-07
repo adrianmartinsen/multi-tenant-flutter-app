@@ -1,13 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../family/domain/family_repo.dart';
 import '../../domain/auth_repo.dart';
 import 'auth_cubit_state.dart';
 
 class AuthCubit extends Cubit<AuthCubitState> {
   final AuthRepository _authRepository;
+  final FamilyRepository _familyRepository;
 
-  AuthCubit({required AuthRepository authRepository})
-    : _authRepository = authRepository,
-      super(AuthInitial());
+  AuthCubit({
+    required AuthRepository authRepository,
+    required FamilyRepository familyRepository,
+  }) : _authRepository = authRepository,
+       _familyRepository = familyRepository,
+       super(AuthInitial());
 
   Future<void> signIn(String email, String password) async {
     emit(AuthLoading());
@@ -34,7 +39,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
   Future<void> createAndJoinFamily(String familyName) async {
     emit(AuthLoading());
     try {
-      await _authRepository.createAndJoinFamily(familyName);
+      await _familyRepository.createAndJoinFamily(familyName);
       await _checkUserState();
     } catch (e) {
       emit(AuthError(e.toString()));
@@ -45,18 +50,20 @@ class AuthCubit extends Cubit<AuthCubitState> {
   Future<void> joinExistingFamily(String familyId) async {
     emit(AuthLoading());
     try {
-      await _authRepository.joinExistingFamily(familyId);
+      await _familyRepository.joinExistingFamily(familyId);
       await _checkUserState();
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
+  // REMOVE THIS ONCE FAMILY DASHBOARD IS UP AND RUNNING (AND HOMEPAGE IS GONE)
+
   Future<void> getFamilyMembers() async {
     if (state is AuthAuthenticated) {
       final currentState = state as AuthAuthenticated;
       try {
-        final members = await _authRepository.getFamilyMembers();
+        final members = await _familyRepository.getFamilyMembers();
         emit(currentState.copyWith(familyMembers: members));
       } catch (e) {
         emit(currentState.copyWith(error: e.toString()));
@@ -106,7 +113,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
       }
 
       if (user.hasFamily) {
-        final family = await _authRepository.getCurrentFamily();
+        final family = await _familyRepository.getCurrentFamily();
         if (family != null) {
           emit(AuthAuthenticated(user: user, family: family));
         } else {

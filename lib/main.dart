@@ -7,6 +7,7 @@ import 'features/auth/presentation/cubit/auth_cubit.dart';
 import 'features/auth/presentation/cubit/auth_cubit_state.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
 import 'features/auth/presentation/pages/family_setup_page.dart';
+import 'features/family/data/supabase_family_repository.dart';
 import 'home_page.dart';
 
 void main() async {
@@ -27,7 +28,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>(
-      create: (context) => AuthCubit(authRepository: SupabaseAuthRepository()),
+      create: (context) => AuthCubit(
+        authRepository: SupabaseAuthRepository(),
+        familyRepository: SupabaseFamilyRepository(),
+      ),
       child: MaterialApp(
         title: 'AllowMe - Family Chore and Allowance Tracker',
         theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
