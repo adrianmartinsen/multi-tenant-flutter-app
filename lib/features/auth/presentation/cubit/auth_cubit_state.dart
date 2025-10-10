@@ -27,7 +27,7 @@ class AuthUserWithoutFamily extends AuthCubitState {
 
 class AuthAuthenticated extends AuthCubitState {
   final UserModel user;
-  final FamilyModel family;
+  final Family family;
   final List<UserModel> familyMembers;
   final String? error;
 
@@ -40,7 +40,7 @@ class AuthAuthenticated extends AuthCubitState {
 
   AuthAuthenticated copyWith({
     UserModel? user,
-    FamilyModel? family,
+    Family? family,
     List<UserModel>? familyMembers,
     String? error,
   }) {

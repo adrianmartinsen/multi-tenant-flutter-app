@@ -4,6 +4,6 @@ import 'family_model.dart';
 abstract class FamilyRepository {
   Future<void> createAndJoinFamily(String familyName);
   Future<void> joinExistingFamily(String familyId);
-  Future<FamilyModel?> getCurrentFamily();
+  Future<Family?> getCurrentFamily();
   Future<List<UserModel>> getFamilyMembers();
 }

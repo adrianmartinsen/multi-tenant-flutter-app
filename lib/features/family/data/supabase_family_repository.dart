@@ -31,7 +31,7 @@ class SupabaseFamilyRepository implements FamilyRepository {
   }
 
   @override
-  Future<FamilyModel?> getCurrentFamily() async {
+  Future<Family?> getCurrentFamily() async {
     final user = _supabase.auth.currentUser;
     if (user == null) return null;
 
@@ -50,7 +50,7 @@ class SupabaseFamilyRepository implements FamilyRepository {
         .eq('id', familyId)
         .single();
 
-    return FamilyModel.fromJson(response);
+    return Family.fromJson(response);
   }
 
   @override

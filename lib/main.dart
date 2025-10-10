@@ -8,6 +8,7 @@ import 'features/auth/presentation/cubit/auth_cubit_state.dart';
 import 'features/auth/presentation/pages/auth_page.dart';
 import 'features/auth/presentation/pages/family_setup_page.dart';
 import 'features/family/data/supabase_family_repository.dart';
+import 'features/family/presentation/pages/family_dashboard_page.dart';
 import 'home_page.dart';
 
 void main() async {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthCubit>(
+    return BlocProvider(
       create: (context) => AuthCubit(
         authRepository: SupabaseAuthRepository(),
         familyRepository: SupabaseFamilyRepository(),
@@ -57,7 +58,8 @@ class AuthWrapper extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthAuthenticated) {
-          return HomePage();
+          return FamilyDashboardPage();
+          // return HomePage();
         } else if (state is AuthUserWithoutFamily) {
           return FamilySetupPage();
         } else {
