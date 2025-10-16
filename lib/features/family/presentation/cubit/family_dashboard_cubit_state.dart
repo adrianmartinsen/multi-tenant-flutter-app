@@ -26,6 +26,18 @@ class FamilyDashboardLoaded extends FamilyDashboardState {
     required this.children,
   });
 
+  FamilyDashboardLoaded copyWith({
+    Family? family,
+    List<UserModel>? members,
+    List<Child>? children,
+  }) {
+    return FamilyDashboardLoaded(
+      family: family ?? this.family,
+      members: members ?? this.members,
+      children: children ?? this.children,
+    );
+  }
+
   @override
   List<Object?> get props => [family, members];
 }

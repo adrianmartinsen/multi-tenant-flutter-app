@@ -11,7 +11,7 @@ abstract class ChildRepository {
   /// Create a new child for the current user's family
   /// The family_id will be automatically set based on the authenticated user
   /// Returns the created child with the generated ID from Supabase
-  Future<Child> createChild(Child child);
+  Future<Child> createChild({required String name, required String familyId});
 
   /// Update an existing child
   /// Only the child's own data is updated, not the family_id

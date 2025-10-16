@@ -9,7 +9,7 @@ import 'features/auth/presentation/pages/auth_page.dart';
 import 'features/auth/presentation/pages/family_setup_page.dart';
 import 'features/family/data/supabase_family_repository.dart';
 import 'features/family/presentation/pages/family_dashboard_page.dart';
-import 'home_page.dart';
+import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
       ),
       child: MaterialApp(
         title: 'AllowMe - Family Chore and Allowance Tracker',
-        theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
         home: AuthWrapper(),
       ),
     );
@@ -59,7 +61,6 @@ class AuthWrapper extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthAuthenticated) {
           return FamilyDashboardPage();
-          // return HomePage();
         } else if (state is AuthUserWithoutFamily) {
           return FamilySetupPage();
         } else {

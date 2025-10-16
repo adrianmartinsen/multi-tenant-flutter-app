@@ -43,16 +43,15 @@ class SupabaseChildRepository implements ChildRepository {
   }
 
   @override
-  Future<Child> createChild(Child child) async {
+  Future<Child> createChild({
+    required String name,
+    required String familyId,
+    double balance = 0.0,
+  }) async {
     try {
-      // Validate the child before inserting
-      if (!child.isValid()) {
-        throw Exception('Invalid child data');
-      }
-
       final response = await _supabase
           .from('children')
-          .insert(child.toInsertJson())
+          .insert({'name': name, 'family_id': familyId, 'balance': balance})
           .select()
           .single();
 
@@ -78,7 +77,7 @@ class SupabaseChildRepository implements ChildRepository {
 
       final response = await _supabase
           .from('children')
-          .update(child.toUpdateJson())
+          .update(child.toJson())
           .eq('id', child.id)
           .select()
           .single();

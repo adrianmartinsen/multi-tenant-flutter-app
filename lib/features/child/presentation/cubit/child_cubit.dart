@@ -3,7 +3,7 @@ import '../../domain/child_model.dart';
 import '../../domain/child_repo.dart';
 import 'child_cubit_state.dart';
 
-class ChildCubit extends Cubit<ChildState> {
+class ChildCubit extends Cubit<ChildCubitState> {
   final ChildRepository _childRepository;
 
   ChildCubit({required ChildRepository childRepository})
@@ -12,10 +12,14 @@ class ChildCubit extends Cubit<ChildState> {
 
   /// Create a new child.
   /// Emits [ChildOperationInProgress], then [ChildOperationSuccess] or [ChildOperationFailure].
-  Future<void> createChild(Child child) async {
+  Future<void> createChild(
+      {required String name, required String familyId}) async {
     emit(ChildOperationInProgress());
     try {
-      final createdChild = await _childRepository.createChild(child);
+      final createdChild = await _childRepository.createChild(
+        name: name,
+        familyId: familyId,
+      );
       emit(
         ChildOperationSuccess(
           message: 'Child created successfully',

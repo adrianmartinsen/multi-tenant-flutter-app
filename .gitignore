@@ -11,6 +11,8 @@ pubspec.lock
 .vscode/
 
 # Misc
+config.json
+*.env
 *.log
 *todo.md
 *copy.dart

@@ -57,20 +57,6 @@ class AuthCubit extends Cubit<AuthCubitState> {
     }
   }
 
-  // REMOVE THIS ONCE FAMILY DASHBOARD IS UP AND RUNNING (AND HOMEPAGE IS GONE)
-
-  Future<void> getFamilyMembers() async {
-    if (state is AuthAuthenticated) {
-      final currentState = state as AuthAuthenticated;
-      try {
-        final members = await _familyRepository.getFamilyMembers();
-        emit(currentState.copyWith(familyMembers: members));
-      } catch (e) {
-        emit(currentState.copyWith(error: e.toString()));
-      }
-    }
-  }
-
   // Check what state the user is in
   Future<void> checkAuthState() async {
     emit(AuthLoading());

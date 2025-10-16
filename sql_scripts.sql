@@ -232,7 +232,7 @@ CREATE TRIGGER on_user_deleted
   FOR EACH ROW EXECUTE FUNCTION handle_user_deletion();
 
   CREATE TABLE public.children (
-  id UUID PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   family_id UUID REFERENCES families(id) ON DELETE CASCADE NOT NULL,
   name TEXT NOT NULL,
   age INTEGER,
